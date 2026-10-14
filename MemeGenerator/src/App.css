@@ -13,7 +13,7 @@ main {
   max-width: 600px;
 }
 
-.header {
+header {
   display: flex;
   align-items: center;
   height: 65px;
