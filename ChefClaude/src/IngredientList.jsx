@@ -1,5 +1,10 @@
-function IngredientList(props) {
-  const ingredientsList = props.ingredients.map((ingredient, index) => (
+function IngredientList({
+  ingredients,
+  toggleRecipeShown,
+  recipeShown,
+  scrollRef,
+}) {
+  const ingredientsList = ingredients.map((ingredient, index) => (
     <li key={index}>{ingredient}</li>
   ));
 
@@ -11,14 +16,14 @@ function IngredientList(props) {
           {ingredientsList}
         </ul>
 
-        {props.ingredients.length > 3 && (
+        {ingredients.length > 3 && (
           <div className="get-recipe-container">
-            <div>
+            <div ref={scrollRef}>
               <h3>Ready for a recipe?</h3>
               <p>Generate a recipe from your list of ingredients.</p>
             </div>
-            <button onClick={props.toggleRecipeShown}>
-              {props.recipeShown ? "Hide Recipe" : "Show Recipe"}
+            <button onClick={toggleRecipeShown}>
+              {recipeShown ? "Hide Recipe" : "Show Recipe"}
             </button>
           </div>
         )}

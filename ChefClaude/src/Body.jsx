@@ -20,6 +20,13 @@ function Body() {
   const [ingredients, setIngredients] = React.useState([]);
   const [recipeShown, setRecipeShown] = React.useState(false);
 
+  const recipeSectionRef = React.useRef(null);
+  React.useEffect(() => {
+    if (recipeShown && recipeSectionRef.current) {
+      recipeSectionRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [recipeShown]);
+
   return (
     <>
       <main>
@@ -32,6 +39,7 @@ function Body() {
             ingredients={ingredients}
             toggleRecipeShown={toggleRecipeShown}
             recipeShown={recipeShown}
+            scrollRef={recipeSectionRef}
           />
         )}
         {recipeShown && <ClaudeRecipe />}
