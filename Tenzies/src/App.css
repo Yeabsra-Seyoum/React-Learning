@@ -50,6 +50,29 @@ main {
   cursor: pointer;
 }
 
+.dice-container button.held {
+  background: linear-gradient(145deg, #86efac, #4ade80);
+  color: #064e3b;
+  box-shadow:
+    inset 0 0 0 2px #22c55e,
+    0 5px 0 #15803d,
+    0 8px 14px rgb(6 78 59 / 28%);
+  transform: translateY(-1px);
+  transition:
+    background 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+.dice-container button.held:hover {
+  background: linear-gradient(145deg, #6ee7a0, #34d399);
+  box-shadow:
+    inset 0 0 0 2px #16a34a,
+    0 6px 0 #15803d,
+    0 10px 16px rgb(6 78 59 / 32%);
+  transform: translateY(-2px);
+}
+
 .roll-dice {
   margin-top: 28px;
   padding: 12px 36px;
@@ -57,22 +80,33 @@ main {
   border-radius: 8px;
   background: #5035ff;
   color: #fff;
-  font: 700 1.1rem Inter, sans-serif;
+  font:
+    700 1.1rem Inter,
+    sans-serif;
   letter-spacing: 0.02em;
-  box-shadow: 0 4px 0 #3420bd, 0 6px 12px rgb(11 36 52 / 18%);
+  box-shadow:
+    0 4px 0 #3420bd,
+    0 6px 12px rgb(11 36 52 / 18%);
   cursor: pointer;
-  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background-color 120ms ease;
 }
 
 .roll-dice:hover {
   background: #4228ec;
   transform: translateY(-1px);
-  box-shadow: 0 5px 0 #3420bd, 0 8px 14px rgb(11 36 52 / 22%);
+  box-shadow:
+    0 5px 0 #3420bd,
+    0 8px 14px rgb(11 36 52 / 22%);
 }
 
 .roll-dice:active {
   transform: translateY(3px);
-  box-shadow: 0 1px 0 #3420bd, 0 2px 5px rgb(11 36 52 / 18%);
+  box-shadow:
+    0 1px 0 #3420bd,
+    0 2px 5px rgb(11 36 52 / 18%);
 }
 
 .roll-dice:focus-visible {
