@@ -26,16 +26,22 @@ function App() {
     }));
   }
 
-  const targetNUmber = 2;
+  const targetNUmber = React.useRef(null);
+
   function holdDie(id) {
+    const clickedDie = dice.find((die) => die.id === id);
+    if (targetNUmber.current === null) {
+      targetNUmber.current = clickedDie.value;
+    }
+
     const newDice = dice.map((die) => {
-      return die.id === id && die.value === targetNUmber
+      return die.id === id && die.value === targetNUmber.current
         ? { ...die, isHeld: !die.isHeld }
         : die;
     });
 
     setDice(newDice);
-    newDice.every((die) => die.value === targetNUmber && die.isHeld) &&
+    newDice.every((die) => die.value === targetNUmber.current && die.isHeld) &&
       alert("Completed");
   }
 
