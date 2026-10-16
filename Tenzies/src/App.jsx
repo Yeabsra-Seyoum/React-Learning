@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.css";
 import Die from "./Die.jsx";
-import Confetti from "./Confetti.jsx";
+import ConfettiEffect from "./Confetti.jsx";
 
 function App() {
   // Update the array of numbers in state to be
   //  an array of objects instead. Each object should look like:
   //  { value: <random number>, isHeld: false }
-  const [dice, setDice] = React.useState(generateAllNewDice);
+  const [dice, setDice] = React.useState(() => generateAllNewDice);
   const diceElement = dice.map((die) => (
     <Die
       key={die.id}
@@ -41,7 +41,6 @@ function App() {
       ),
     );
   }
-  // dice[0]
   const gameWon =
     dice.every((die) => die.isHeld) &&
     dice.every((die) => die.value === dice[0].value);
@@ -59,7 +58,6 @@ function App() {
 
   function newGame() {
     setDice(generateAllNewDice);
-    targetNUmber.current = null;
   }
 
   return (
@@ -69,7 +67,7 @@ function App() {
           <p className="win-message" role="status">
             You won! 🎉
           </p>
-          <Confetti />
+          <ConfettiEffect />
         </>
       )}
       <div className="dice-container">{diceElement}</div>
