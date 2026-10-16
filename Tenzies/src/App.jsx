@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import Die from "./Die.jsx";
+import Confetti from "./Confetti.jsx";
 
 function App() {
   const [won, setWon] = React.useState(false);
@@ -46,7 +47,6 @@ function App() {
       newDice.every((die) => die.value === targetNUmber.current && die.isHeld)
     ) {
       setWon(true);
-      alert("Completed! 🎉");
     }
   }
 
@@ -69,6 +69,12 @@ function App() {
 
   return (
     <main>
+      {won && (
+        <>
+          <p className="win-message" role="status">You won! 🎉</p>
+          <Confetti />
+        </>
+      )}
       <div className="dice-container">{diceElement}</div>
       <button className="roll-dice" onClick={won ? newGame : rollDice}>
         {won ? "Start new game" : "Roll"}
