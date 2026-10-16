@@ -3,6 +3,7 @@ import "./App.css";
 import Die from "./Die.jsx";
 
 function App() {
+  const [won, setWon] = React.useState(false);
   // Update the array of numbers in state to be
   //  an array of objects instead. Each object should look like:
   //  { value: <random number>, isHeld: false }
@@ -41,8 +42,12 @@ function App() {
     });
 
     setDice(newDice);
-    newDice.every((die) => die.value === targetNUmber.current && die.isHeld) &&
-      alert("Completed");
+    if (
+      newDice.every((die) => die.value === targetNUmber.current && die.isHeld)
+    ) {
+      setWon(true);
+      alert("Completed! 🎉");
+    }
   }
 
   function rollDice() {
@@ -56,11 +61,17 @@ function App() {
     );
   }
 
+  function newGame() {
+    setDice(generateAllNewDice);
+    targetNUmber.current = null;
+    setWon(false);
+  }
+
   return (
     <main>
       <div className="dice-container">{diceElement}</div>
-      <button className="roll-dice" onClick={rollDice}>
-        Roll
+      <button className="roll-dice" onClick={won ? newGame : rollDice}>
+        {won ? "Start new game" : "Roll"}
       </button>
     </main>
   );
