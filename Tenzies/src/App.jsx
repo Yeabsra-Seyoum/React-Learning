@@ -7,7 +7,7 @@ function App() {
   // Update the array of numbers in state to be
   //  an array of objects instead. Each object should look like:
   //  { value: <random number>, isHeld: false }
-  const [dice, setDice] = React.useState(() => generateAllNewDice);
+  const [dice, setDice] = React.useState(generateAllNewDice);
   const diceElement = dice.map((die) => (
     <Die
       key={die.id}
