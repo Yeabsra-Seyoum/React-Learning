@@ -1,4 +1,11 @@
-const COLORS = ["#f97316", "#eab308", "#22c55e", "#3b82f6", "#ec4899", "#8b5cf6"];
+const COLORS = [
+  "#f97316",
+  "#eab308",
+  "#22c55e",
+  "#3b82f6",
+  "#ec4899",
+  "#8b5cf6",
+];
 
 const confettiPieces = Array.from({ length: 64 }, (_, index) => {
   const angle = Math.random() * Math.PI * 2;

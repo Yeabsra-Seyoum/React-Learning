@@ -4,7 +4,6 @@ import Die from "./Die.jsx";
 import Confetti from "./Confetti.jsx";
 
 function App() {
-  const [won, setWon] = React.useState(false);
   // Update the array of numbers in state to be
   //  an array of objects instead. Each object should look like:
   //  { value: <random number>, isHeld: false }
@@ -36,19 +35,16 @@ function App() {
       targetNUmber.current = clickedDie.value;
     }
 
-    const newDice = dice.map((die) => {
-      return die.id === id && die.value === targetNUmber.current
-        ? { ...die, isHeld: !die.isHeld }
-        : die;
-    });
-
-    setDice(newDice);
-    if (
-      newDice.every((die) => die.value === targetNUmber.current && die.isHeld)
-    ) {
-      setWon(true);
-    }
+    setDice((oldDice) =>
+      oldDice.map((die) =>
+        die.id === id ? { ...die, isHeld: !die.isHeld } : die,
+      ),
+    );
   }
+  // dice[0]
+  const gameWon =
+    dice.every((die) => die.isHeld) &&
+    dice.every((die) => die.value === dice[0].value);
 
   function rollDice() {
     // Use the current dice state so held dice keep their value and identity,
@@ -64,20 +60,21 @@ function App() {
   function newGame() {
     setDice(generateAllNewDice);
     targetNUmber.current = null;
-    setWon(false);
   }
 
   return (
     <main>
-      {won && (
+      {gameWon && (
         <>
-          <p className="win-message" role="status">You won! 🎉</p>
+          <p className="win-message" role="status">
+            You won! 🎉
+          </p>
           <Confetti />
         </>
       )}
       <div className="dice-container">{diceElement}</div>
-      <button className="roll-dice" onClick={won ? newGame : rollDice}>
-        {won ? "Start new game" : "Roll"}
+      <button className="roll-dice" onClick={gameWon ? newGame : rollDice}>
+        {gameWon ? "Start new game" : "Roll"}
       </button>
     </main>
   );
