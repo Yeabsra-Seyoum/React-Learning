@@ -25,22 +25,27 @@ function App() {
       id: index,
     }));
   }
+
+  const targetNUmber = 2;
   function holdDie(id) {
-    setDice((prevDice) =>
-      prevDice.map((die) => {
-        return die.id === id ? { ...die, isHeld: !die.isHeld } : die;
-      }),
-    );
+    const newDice = dice.map((die) => {
+      return die.id === id && die.value === targetNUmber
+        ? { ...die, isHeld: !die.isHeld }
+        : die;
+    });
+
+    setDice(newDice);
+    newDice.every((die) => die.value === targetNUmber && die.isHeld) &&
+      alert("Completed");
   }
 
   function rollDice() {
     // Use the current dice state so held dice keep their value and identity,
     // while only unheld dice receive a new random value.
+
     setDice((prevDice) =>
       prevDice.map((die) =>
-        die.isHeld
-          ? die
-          : { ...die, value: Math.ceil(Math.random() * 6) },
+        die.isHeld ? die : { ...die, value: Math.ceil(Math.random() * 6) },
       ),
     );
   }
