@@ -34,19 +34,57 @@ header p {
 }
 
 .game-status {
-  background-color: #10a95b;
-  padding: 8px 0;
-  color: #f9f4da;
-  border-radius: 4px;
-  margin-top: 20px;
-}
-
-.game-status > P,
-h2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  margin: 0;
+  min-height: 76px;
+  padding: 10px 16px;
+  margin: 16px auto;
+  width: 100%;
+  max-width: 480px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
+.game-status h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.game-status p {
+  font-size: 0.95rem;
+  margin: 4px 0 0;
+}
+
+.game-status.game-won {
+  background-color: #10a95b;
+  color: #f9f4da;
+  border: 1px solid #0d8748;
+  animation: popIn 0.25s ease-out;
+}
+
+.game-status.game-lost {
+  background-color: #ba2a2a;
+  color: #f9f4da;
+  border: 1px solid #8e1f1f;
+  animation: popIn 0.25s ease-out;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 .language-chips {
   display: flex;
   flex-wrap: wrap;

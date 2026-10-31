@@ -19,6 +19,13 @@ function App() {
     }
     setGussedLetter((prev) => [...prev, letter]);
   }
+
+  const isGameWon = currentWord
+    .toLowerCase()
+    .split("")
+    .every((letter) => gussedLetter.includes(letter));
+
+  const isGameLost = wrongGuessCount >= languages.length - 1;
   return (
     <>
       <header>
@@ -29,9 +36,22 @@ function App() {
         </p>
       </header>
 
-      <section className="game-status">
-        <h2>You win!</h2>
-        <p>Well Done🥳</p>
+      <section
+        className={`game-status ${isGameWon ? "game-won" : isGameLost ? "game-lost" : ""}`}
+      >
+        {isGameWon && (
+          <>
+            <h2>You win!</h2>
+            <p>Well Done 🥳</p>
+          </>
+        )}
+
+        {isGameLost && (
+          <>
+            <h2>Game Over!!</h2>
+            <p>You lose! Better start learning Assembly 😭</p>
+          </>
+        )}
       </section>
 
       <section className="language-chips">
@@ -80,17 +100,3 @@ function App() {
 }
 
 export default App;
-
-// [Layer 1: Guessed Letters State]
-//        │
-//        ▼
-// [Layer 2: Click Event Handler]  ──> (Appends clicked letter to state)
-//        │
-//        ▼
-// [Layer 3: Derived Word Display] ──> (Render letter IF it's in state, else blank)
-//        │
-//        ▼
-// [Layer 4: Derived Wrong Guesses]──> (Count errors & eliminate language chips)
-//        │
-//        ▼
-// [Layer 5: Game Over Conditions] ──> (Win / Loss derived calculation)
