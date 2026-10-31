@@ -1,9 +1,10 @@
+import { useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import { languages } from "./data";
 
 function App() {
-  const currentWord = "Reacting";
+  const [currentWord, seCurrentWord] = useState("Reacting");
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
   return (
     <>
@@ -31,17 +32,21 @@ function App() {
       <section className="word">
         {currentWord.split("").map((letter, index) => (
           <span key={index} className="letter-box">
-            {letter}
+            {letter.toUpperCase()}
           </span>
         ))}
       </section>
 
       <section className="keyboard">
         {alphabet.split("").map((letter) => (
-          <button key={letter} className="key-btn" type="button">
+          <button key={letter.toUpperCase()} className="key-btn" type="button">
             {letter.toUpperCase()}
           </button>
         ))}
+      </section>
+
+      <section>
+        <button className="new-game">New Game</button>
       </section>
     </>
   );

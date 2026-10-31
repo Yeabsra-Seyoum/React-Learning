@@ -149,3 +149,36 @@ h2 {
   transform: none;
   box-shadow: none;
 }
+
+/* New Game Button */
+.new-game {
+  display: block;
+  margin: 30px auto;
+  padding: 10px 40px;
+  min-width: 200px;
+  border-radius: 6px;
+
+  background-color: #11b5e5;
+  color: #1e1e1e;
+  border: 1px solid #0e95bd;
+
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+
+  box-shadow: 0 3px 0 #0c7696;
+  transition:
+    background-color 0.15s ease,
+    transform 0.05s ease,
+    box-shadow 0.05s ease;
+}
+
+.new-game:hover {
+  background-color: #2ed3e9;
+}
+
+.new-game:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 #0c7696;
+}
