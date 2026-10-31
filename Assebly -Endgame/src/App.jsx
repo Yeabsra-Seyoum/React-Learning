@@ -1,14 +1,33 @@
 import { useState } from "react";
 import "./App.css";
-import Header from "./components/Header";
 import { languages } from "./data";
 
 function App() {
-  const [currentWord, seCurrentWord] = useState("Reacting");
+  const [currentWord, seCurrentWord] = useState("REACTA");
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+  const [gussedLetter, setGussedLetter] = useState([]);
+
+  const wrongGuessCount = gussedLetter.filter(
+    (letter) => !currentWord.toLowerCase().includes(letter.toLowerCase()),
+  ).length;
+
+  console.log(wrongGuessCount);
+  function addGuessedLetter(letter) {
+    if (gussedLetter.includes(letter)) {
+      return;
+    }
+    setGussedLetter((prev) => [...prev, letter]);
+  }
   return (
     <>
-      <Header />
+      <header>
+        <h1>Assembly: Endgame</h1>
+        <p>
+          Guess the world in under 8 attempts to keep the programming world safe
+          from Assembly!
+        </p>
+      </header>
 
       <section className="game-status">
         <h2>You win!</h2>
@@ -30,16 +49,24 @@ function App() {
       </section>
 
       <section className="word">
-        {currentWord.split("").map((letter, index) => (
-          <span key={index} className="letter-box">
-            {letter.toUpperCase()}
-          </span>
-        ))}
+        {currentWord.split("").map((letter, index) => {
+          const isGuessed = gussedLetter.includes(letter.toLowerCase());
+          return (
+            <span key={index} className="letter-box">
+              {isGuessed ? letter.toUpperCase() : ""}
+            </span>
+          );
+        })}
       </section>
 
       <section className="keyboard">
         {alphabet.split("").map((letter) => (
-          <button key={letter.toUpperCase()} className="key-btn" type="button">
+          <button
+            key={letter.toUpperCase()}
+            className="key-btn"
+            type="button"
+            onClick={() => addGuessedLetter(letter)}
+          >
             {letter.toUpperCase()}
           </button>
         ))}
@@ -53,3 +80,17 @@ function App() {
 }
 
 export default App;
+
+// [Layer 1: Guessed Letters State]
+//        │
+//        ▼
+// [Layer 2: Click Event Handler]  ──> (Appends clicked letter to state)
+//        │
+//        ▼
+// [Layer 3: Derived Word Display] ──> (Render letter IF it's in state, else blank)
+//        │
+//        ▼
+// [Layer 4: Derived Wrong Guesses]──> (Count errors & eliminate language chips)
+//        │
+//        ▼
+// [Layer 5: Game Over Conditions] ──> (Win / Loss derived calculation)
