@@ -4,16 +4,15 @@ import { languages } from "./data";
 import { clsx } from "clsx";
 
 function App() {
-  const [currentWord, setCurrentWord] = useState("REACTA");
-  const alphabet = "abcdefghijklmnopqrstuvwxyz";
-
+  const [currentWord, setCurrentWord] = useState("REACT");
   const [guessedLetter, setGuessedLetter] = useState([]);
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
   const wrongGuessCount = guessedLetter.filter(
     (letter) => !currentWord.toLowerCase().includes(letter.toLowerCase()),
   ).length;
 
-  console.log(wrongGuessCount);
+  console.log("wrongGuessCount", wrongGuessCount);
 
   function addGuessedLetter(letter) {
     if (guessedLetter.includes(letter)) return;
@@ -56,17 +55,21 @@ function App() {
       </section>
 
       <section className="language-chips">
-        {languages.map((lang) => (
-          <span
-            key={lang.name}
-            style={{
-              backgroundColor: lang.backgroundColor,
-              color: lang.color,
-            }}
-          >
-            {lang.name}
-          </span>
-        ))}
+        {languages.map((lang, index) => {
+          const isLost = index < wrongGuessCount;
+          return (
+            <span
+              key={lang.name}
+              className={clsx("chip", { lost: isLost })}
+              style={{
+                backgroundColor: lang.backgroundColor,
+                color: lang.color,
+              }}
+            >
+              {lang.name}
+            </span>
+          );
+        })}
       </section>
 
       <section className="word">
@@ -85,13 +88,13 @@ function App() {
           const isGuessed = guessedLetter.includes(letter);
           const isCorrect =
             isGuessed && currentWord.toLowerCase().includes(letter);
-          const isIncorrect = isGuessed && !isCorrect;
+          const isWrong = isGuessed && !isCorrect;
           return (
             <button
               key={letter.toUpperCase()}
               className={clsx("key-btn", {
-                "guessed-correctly": isCorrect,
-                "guessed-incorrectly": isIncorrect,
+                "guessed-correct": isCorrect,
+                "guessed-wrong": isWrong,
               })}
               type="button"
               onClick={() => addGuessedLetter(letter)}

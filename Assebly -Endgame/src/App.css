@@ -91,24 +91,52 @@ header p {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   gap: 8px;
 
-  max-width: 420px;
+  max-width: 440px;
   margin: 20px auto;
   padding: 0 10px;
 }
 
-.language-chips > span {
+/* Base chip styling */
+.chip {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
   padding: 5px 10px;
   border-radius: 4px;
+  font-family: inherit;
   font-size: 0.85rem;
   font-weight: 600;
   white-space: nowrap;
   user-select: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Dimmed overlay with skull when lost */
+.chip.lost::before {
+  content: "💀";
+  position: absolute;
+  inset: 0; /* shorthand for top: 0; left: 0; right: 0; bottom: 0; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0.8rem;
+  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Optional subtle softening for eliminated chips */
+.chip.lost {
+  filter: grayscale(40%);
 }
 
 .word {
@@ -183,14 +211,14 @@ header p {
 }
 
 /* Correct Guess: Assembly Endgame Green */
-.key-btn.guessed-correctly {
+.key-btn.guessed-correct {
   background-color: #10a95b;
   border-color: #10a95b;
   color: #ffffff;
 }
 
 /* Incorrect Guess: Assembly Endgame Dark Crimson/Muted Red */
-.key-btn.guessed-incorrectly {
+.key-btn.guessed-wrong {
   background-color: #ec5d5d;
   border-color: #ec5d5d;
   color: #ffffff;
@@ -203,7 +231,7 @@ header p {
 }
 
 /* Optional: Slight opacity reduction only for unguessed disabled keys (e.g., game over) */
-.key-btn:disabled:not(.guessed-correctly):not(.guessed-incorrectly) {
+.key-btn:disabled:not(.guessed-correct):not(.guessed-wrong) {
   opacity: 0.5;
 }
 
