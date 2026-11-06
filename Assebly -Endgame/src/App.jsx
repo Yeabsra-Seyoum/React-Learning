@@ -1,29 +1,30 @@
 import { useState } from "react";
 import "./App.css";
 import { languages } from "./data";
+import { clsx } from "clsx";
 
 function App() {
-  const [currentWord, seCurrentWord] = useState("REACTA");
+  const [currentWord, setCurrentWord] = useState("REACTA");
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-  const [gussedLetter, setGussedLetter] = useState([]);
+  const [guessedLetter, setGuessedLetter] = useState([]);
 
-  const wrongGuessCount = gussedLetter.filter(
+  const wrongGuessCount = guessedLetter.filter(
     (letter) => !currentWord.toLowerCase().includes(letter.toLowerCase()),
   ).length;
 
   console.log(wrongGuessCount);
+
   function addGuessedLetter(letter) {
-    if (gussedLetter.includes(letter)) {
-      return;
-    }
-    setGussedLetter((prev) => [...prev, letter]);
+    if (guessedLetter.includes(letter)) return;
+
+    setGuessedLetter((prev) => [...prev, letter]);
   }
 
   const isGameWon = currentWord
     .toLowerCase()
     .split("")
-    .every((letter) => gussedLetter.includes(letter));
+    .every((letter) => guessedLetter.includes(letter));
 
   const isGameLost = wrongGuessCount >= languages.length - 1;
   return (
@@ -70,7 +71,7 @@ function App() {
 
       <section className="word">
         {currentWord.split("").map((letter, index) => {
-          const isGuessed = gussedLetter.includes(letter.toLowerCase());
+          const isGuessed = guessedLetter.includes(letter.toLowerCase());
           return (
             <span key={index} className="letter-box">
               {isGuessed ? letter.toUpperCase() : ""}
@@ -80,16 +81,25 @@ function App() {
       </section>
 
       <section className="keyboard">
-        {alphabet.split("").map((letter) => (
-          <button
-            key={letter.toUpperCase()}
-            className="key-btn"
-            type="button"
-            onClick={() => addGuessedLetter(letter)}
-          >
-            {letter.toUpperCase()}
-          </button>
-        ))}
+        {alphabet.split("").map((letter) => {
+          const isGuessed = guessedLetter.includes(letter);
+          const isCorrect =
+            isGuessed && currentWord.toLowerCase().includes(letter);
+          const isIncorrect = isGuessed && !isCorrect;
+          return (
+            <button
+              key={letter.toUpperCase()}
+              className={clsx("key-btn", {
+                "guessed-correctly": isCorrect,
+                "guessed-incorrectly": isIncorrect,
+              })}
+              type="button"
+              onClick={() => addGuessedLetter(letter)}
+            >
+              {letter.toUpperCase()}
+            </button>
+          );
+        })}
       </section>
 
       <section>
@@ -100,3 +110,5 @@ function App() {
 }
 
 export default App;
+
+//

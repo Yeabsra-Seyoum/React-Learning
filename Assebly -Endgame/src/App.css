@@ -46,7 +46,9 @@ header p {
   max-width: 480px;
   border: 1px solid transparent;
   border-radius: 8px;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .game-status h2 {
@@ -155,37 +157,54 @@ header p {
   align-items: center;
   justify-content: center;
 
+  /* Endgame signature keyboard gold/yellow */
   background-color: #fcba29;
   color: #1e1e1e;
-  border: 1px solid #d49a1d;
-  border-radius: 6px;
+  border: 1px solid #d79b18;
+  border-radius: 4px;
 
+  font-family: inherit;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
   user-select: none;
 
-  box-shadow: 0 3px 0 #b38012;
   transition:
-    transform 0.05s ease,
-    box-shadow 0.05s ease,
-    background-color 0.15s ease;
+    background-color 0.15s ease,
+    filter 0.15s ease;
 }
 
-.key-btn:hover {
-  background-color: #ffd05b;
+.key-btn:hover:not(:disabled) {
+  filter: brightness(1.08);
 }
 
-.key-btn:active {
-  transform: translateY(3px);
-  box-shadow: 0 0 0 #b38012;
+.key-btn:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
+/* Correct Guess: Assembly Endgame Green */
+.key-btn.guessed-correctly {
+  background-color: #10a95b;
+  border-color: #10a95b;
+  color: #ffffff;
+}
+
+/* Incorrect Guess: Assembly Endgame Dark Crimson/Muted Red */
+.key-btn.guessed-incorrectly {
+  background-color: #ec5d5d;
+  border-color: #ec5d5d;
+  color: #ffffff;
+}
+
+/* Disabled State: keep clear visual feedback for guessed keys */
 .key-btn:disabled {
-  opacity: 0.4;
   cursor: not-allowed;
   transform: none;
-  box-shadow: none;
+}
+
+/* Optional: Slight opacity reduction only for unguessed disabled keys (e.g., game over) */
+.key-btn:disabled:not(.guessed-correctly):not(.guessed-incorrectly) {
+  opacity: 0.5;
 }
 
 /* New Game Button */
