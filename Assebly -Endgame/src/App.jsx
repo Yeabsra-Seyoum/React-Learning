@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import { languages } from "./data";
 import { clsx } from "clsx";
+import confetti from "canvas-confetti";
 
 /**
  * Backlog:
  *
  * - Farewell messages in status section
  * - Fix a11y issues
- * - Make the new game button work
  * - Choose a random word from a list of words
  * - Confetti drop when the user wins
  */
@@ -39,6 +39,40 @@ export default function App() {
     setGuessedLetter([]);
     console.log("New Game!");
   }
+
+  // Confetti Celebration
+  const celebrateWin = () => {
+    const end = Date.now() + 3000;
+    const colors = ["#bb0000", "#ffffff"];
+
+    (function frame() {
+      confetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors,
+      });
+
+      confetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors,
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    })();
+  };
+
+  useEffect(() => {
+    if (isGameWon) {
+      celebrateWin();
+    }
+  }, [isGameWon]);
   return (
     <>
       <header>
