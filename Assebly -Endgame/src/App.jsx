@@ -1,20 +1,22 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { languages } from "./data";
+import { languages, words } from "./data";
 import { clsx } from "clsx";
 import confetti from "canvas-confetti";
 
 /**
  * Backlog:
- *
+ *  - when user fail  display the word in the word section
+ *  - Add a timer to the game
+ *  - Add a score system
  * - Farewell messages in status section
  * - Fix a11y issues
- * - Choose a random word from a list of words
- * - Confetti drop when the user wins
  */
 
 export default function App() {
-  const [currentWord, setCurrentWord] = useState("REACT");
+  const wordIndex = Math.floor(Math.random() * words.length);
+  const word = words[wordIndex];
+  const [currentWord, setCurrentWord] = useState(word);
   const [guessedLetter, setGuessedLetter] = useState([]);
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -37,6 +39,8 @@ export default function App() {
 
   function newGame() {
     setGuessedLetter([]);
+    setCurrentWord(word);
+    console.log(word);
     console.log("New Game!");
   }
 
