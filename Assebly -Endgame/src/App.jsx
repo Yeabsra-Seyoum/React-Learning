@@ -3,7 +3,17 @@ import "./App.css";
 import { languages } from "./data";
 import { clsx } from "clsx";
 
-function App() {
+/**
+ * Backlog:
+ *
+ * - Farewell messages in status section
+ * - Fix a11y issues
+ * - Make the new game button work
+ * - Choose a random word from a list of words
+ * - Confetti drop when the user wins
+ */
+
+export default function App() {
   const [currentWord, setCurrentWord] = useState("REACT");
   const [guessedLetter, setGuessedLetter] = useState([]);
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -11,8 +21,6 @@ function App() {
   const wrongGuessCount = guessedLetter.filter(
     (letter) => !currentWord.toLowerCase().includes(letter.toLowerCase()),
   ).length;
-
-  console.log("wrongGuessCount", wrongGuessCount);
 
   function addGuessedLetter(letter) {
     if (guessedLetter.includes(letter)) return;
@@ -26,6 +34,11 @@ function App() {
     .every((letter) => guessedLetter.includes(letter));
 
   const isGameLost = wrongGuessCount >= languages.length - 1;
+
+  function newGame() {
+    setGuessedLetter([]);
+    console.log("New Game!");
+  }
   return (
     <>
       <header>
@@ -60,7 +73,7 @@ function App() {
           return (
             <span
               key={lang.name}
-              className={clsx("chip", { lost: isLost })}
+              className={`chip ${isLost ? "lost" : ""}`}
               style={{
                 backgroundColor: lang.backgroundColor,
                 color: lang.color,
@@ -106,12 +119,10 @@ function App() {
       </section>
 
       <section>
-        <button className="new-game">New Game</button>
+        <button className="new-game" onClick={newGame}>
+          New Game
+        </button>
       </section>
     </>
   );
 }
-
-export default App;
-
-//
