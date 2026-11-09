@@ -1,19 +1,51 @@
-# React + Vite
+# Assembly: Endgame 🎮
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A word-guessing game built with React as part of the [Scrimba Frontend Developer Career Path](https://scrimba.com/).
 
-Currently, two official plugins are available:
+The goal is to save the programming world from Assembly by correctly guessing the word before running out of attempts. Each incorrect guess eliminates a programming language!
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Interactive word-guessing gameplay.
+- Tracks correct and incorrect guesses.
+- Displays different game states depending on the player's progress.
+- Keyboard interaction for selecting letters.
+- Visual feedback for correct and incorrect guesses.
+- Option to start a new game.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Built With
 
-## Expanding the ESLint configuration
+- React
+- JavaScript
+- CSS
+- HTML
+- clsx
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 💡 Key Takeaways
 
-Key take aways:
-clsx package
+### 1. Conditional Class Names with `clsx`
+
+Learned how to use `clsx` to conditionally apply CSS classes based on application state.
+
+This makes styling dynamic elements cleaner and more readable without writing complicated conditional expressions directly inside JSX.
+
+### 2. Disabling Buttons Dynamically
+
+Learned how to use the `disabled` attribute on buttons to control user interaction.
+
+### 3. Building Step by Step: From Static to Interactive
+
+One of my biggest takeaways was learning to build an application incrementally.
+
+Instead of trying to implement everything at once, I started with the static UI and gradually introduced functionality:
+
+- Built the initial static layout.
+- Identified the different UI components.
+- Added state to manage the game.
+- Implemented the game logic.
+- Connected the logic to the UI.
+- Added conditional styling and interactive behavior.
+
+This approach made the application easier to understand, debug, and develop.
+
+Built with ❤️ while learning React through Scrimba.

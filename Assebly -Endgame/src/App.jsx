@@ -4,13 +4,6 @@ import { languages, words, getFarewellText } from "./data";
 import { clsx } from "clsx";
 import confetti from "canvas-confetti";
 
-/**
-
- *  - Add a timer to the game
- * - Farewell messages in status section
- * - Fix a11y issues
- */
-
 export default function App() {
   const wordIndex = Math.floor(Math.random() * words.length);
   const word = words[wordIndex];
