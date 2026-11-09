@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { languages, words } from "./data";
+import { languages, words, getFarewellText } from "./data";
 import { clsx } from "clsx";
 import confetti from "canvas-confetti";
 
 /**
- * Backlog:
- *  - when user fail  display the word in the word section
+
  *  - Add a timer to the game
- *  - Add a score system
  * - Farewell messages in status section
  * - Fix a11y issues
  */
@@ -18,6 +16,7 @@ export default function App() {
   const word = words[wordIndex];
   const [currentWord, setCurrentWord] = useState(word);
   const [guessedLetter, setGuessedLetter] = useState([]);
+  const [farewellMessage, setFarewellMessage] = useState("");
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
   const wrongGuessCount = guessedLetter.filter(
@@ -28,6 +27,10 @@ export default function App() {
     if (guessedLetter.includes(letter)) return;
 
     setGuessedLetter((prev) => [...prev, letter]);
+
+    if (!currentWord.includes(letter)) {
+      setFarewellMessage(getFarewellText(languages[wrongGuessCount].name));
+    }
   }
 
   const isGameWon = currentWord
@@ -40,8 +43,7 @@ export default function App() {
   function newGame() {
     setGuessedLetter([]);
     setCurrentWord(word);
-    console.log(word);
-    console.log("New Game!");
+    setFarewellMessage("");
   }
 
   // Confetti Celebration
@@ -77,6 +79,7 @@ export default function App() {
       celebrateWin();
     }
   }, [isGameWon]);
+
   return (
     <>
       <header>
@@ -90,17 +93,20 @@ export default function App() {
       <section
         className={`game-status ${isGameWon ? "game-won" : isGameLost ? "game-lost" : ""}`}
       >
+        {!isGameWon && !isGameLost && farewellMessage && (
+          <p className="farewell-message">{farewellMessage}</p>
+        )}
+
         {isGameWon && (
           <>
             <h2>You win!</h2>
             <p>Well Done 🥳</p>
           </>
         )}
-
         {isGameLost && (
           <>
             <h2>Game Over!!</h2>
-            <p>You lose! Better start learning Assembly 😭</p>
+            <p>You better start learning Assembly</p>
           </>
         )}
       </section>
@@ -126,9 +132,14 @@ export default function App() {
       <section className="word">
         {currentWord.split("").map((letter, index) => {
           const isGuessed = guessedLetter.includes(letter.toLowerCase());
+          const shouldRevealLetter = isGameLost || isGuessed;
+          const letterClass = clsx("letter-box", {
+            "revealed-letter": isGameLost && !isGuessed,
+          });
+
           return (
-            <span key={index} className="letter-box">
-              {isGuessed ? letter.toUpperCase() : ""}
+            <span key={index} className={letterClass}>
+              {shouldRevealLetter ? letter.toUpperCase() : ""}
             </span>
           );
         })}
@@ -149,6 +160,7 @@ export default function App() {
               })}
               type="button"
               onClick={() => addGuessedLetter(letter)}
+              disabled={isGuessed || isGameWon || isGameLost}
             >
               {letter.toUpperCase()}
             </button>
